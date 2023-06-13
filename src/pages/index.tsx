@@ -1,4 +1,5 @@
 import { Topic } from "@prisma/client";
+import { log } from "console";
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -40,8 +41,12 @@ const Content: React.FC = () => {
   );
 
   const createNewTopic = api.topic.create.useMutation({
-    onSuccess: () => {
-      refetchTopics();
+    onSuccess: async () => {
+      try {
+        await refetchTopics();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -55,14 +60,22 @@ const Content: React.FC = () => {
   );
 
   const createNewNote = api.note.create.useMutation({
-    onSuccess: () => {
-      refetchNotes();
+    onSuccess: async () => {
+      try {
+        await refetchTopics();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   const deleteNote = api.note.delete.useMutation({
-    onSuccess: () => {
-      refetchNotes();
+    onSuccess: async () => {
+      try {
+        await refetchTopics();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
